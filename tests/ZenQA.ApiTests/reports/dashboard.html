@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 ZenQA API Test Reports Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh; 
+            padding: 20px; 
+            color: #333; 
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15); 
+        }
+        .header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 40px; 
+            text-align: center; 
+        }
+        .header h1 { 
+            font-size: 3em; 
+            margin-bottom: 10px; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3); 
+        }
+        .subtitle { 
+            font-size: 1.3em; 
+            opacity: 0.9; 
+            font-weight: 300; 
+        }
+        .summary-cards { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+            padding: 40px; 
+            background: #f8fafc; 
+        }
+        .summary-card { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            text-align: center; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            border-left: 5px solid #38a169; 
+        }
+        .summary-value { 
+            font-size: 2.5em; 
+            font-weight: bold; 
+            color: #38a169; 
+            margin-bottom: 10px; 
+        }
+        .summary-label { 
+            font-size: 1.1em; 
+            color: #666; 
+            font-weight: 500; 
+        }
+        .reports-section { 
+            padding: 40px; 
+        }
+        .section-title { 
+            font-size: 2.5em; 
+            margin-bottom: 30px; 
+            color: #4a5568; 
+            text-align: center; 
+        }
+        .reports-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 25px; 
+        }
+        .report-card { 
+            background: white; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        }
+        .report-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12); 
+        }
+        .report-header { 
+            background: linear-gradient(90deg, #667eea, #764ba2); 
+            color: white; 
+            padding: 20px; 
+        }
+        .report-title { 
+            font-size: 1.4em; 
+            font-weight: 600; 
+            margin-bottom: 5px; 
+        }
+        .report-description { 
+            opacity: 0.9; 
+            font-size: 0.95em; 
+        }
+        .report-content { 
+            padding: 20px; 
+        }
+        .report-link { 
+            display: inline-block; 
+            background: #667eea; 
+            color: white; 
+            padding: 12px 24px; 
+            border-radius: 8px; 
+            text-decoration: none; 
+            font-weight: 500; 
+            transition: background 0.3s ease; 
+        }
+        .report-link:hover { 
+            background: #5a6fd8; 
+        }
+        .file-info { 
+            margin-top: 15px; 
+            padding: 10px; 
+            background: #f7fafc; 
+            border-radius: 8px; 
+            font-size: 0.9em; 
+            color: #666; 
+        }
+        .status-badge { 
+            display: inline-block; 
+            padding: 6px 12px; 
+            border-radius: 20px; 
+            font-size: 0.8em; 
+            font-weight: bold; 
+            background: #38a169; 
+            color: white; 
+            margin-bottom: 15px; 
+        }
+        .timestamp { 
+            text-align: center; 
+            padding: 20px; 
+            color: #666; 
+            font-style: italic; 
+            background: #f8fafc; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 ZenQA API Test Reports</h1>
+            <div class="subtitle">Comprehensive Test Execution Dashboard</div>
+        </div>
+
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="summary-value">13</div>
+                <div class="summary-label">Total Tests</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value">13</div>
+                <div class="summary-label">Passed ✅</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value">0</div>
+                <div class="summary-label">Failed ❌</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value">100%</div>
+                <div class="summary-label">Success Rate</div>
+            </div>
+        </div>
+
+        <div class="reports-section">
+            <h2 class="section-title">📊 Available Reports</h2>
+            <div class="reports-grid">
+                
+                <div class="report-card">
+                    <div class="report-header">
+                        <div class="report-title">🎯 Comprehensive Test Report</div>
+                        <div class="report-description">Interactive detailed report with HTTP request/response logging</div>
+                    </div>
+                    <div class="report-content">
+                        <div class="status-badge">Interactive</div>
+                        <a href="comprehensive-test-report.html" class="report-link" target="_blank">View Report</a>
+                        <div class="file-info">
+                            <strong>File:</strong> comprehensive-test-report.html<br>
+                            <strong>Features:</strong> HTTP logging, expandable details, visual indicators
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-header">
+                        <div class="report-title">📋 Test Execution Summary</div>
+                        <div class="report-description">Standard HTML test results with timing information</div>
+                    </div>
+                    <div class="report-content">
+                        <div class="status-badge">Standard</div>
+                        <a href="test-summary.html" class="report-link" target="_blank">View Report</a>
+                        <div class="file-info">
+                            <strong>File:</strong> test-summary.html<br>
+                            <strong>Features:</strong> Test duration, pass/fail status, basic metrics
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-header">
+                        <div class="report-title">📊 Markdown Summary</div>
+                        <div class="report-description">Detailed markdown report with test categorization</div>
+                    </div>
+                    <div class="report-content">
+                        <div class="status-badge">Documentation</div>
+                        <a href="TEST_EXECUTION_SUMMARY.md" class="report-link" target="_blank">View Summary</a>
+                        <div class="file-info">
+                            <strong>File:</strong> TEST_EXECUTION_SUMMARY.md<br>
+                            <strong>Features:</strong> Test categories, metrics, framework details
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-header">
+                        <div class="report-title">🔍 TRX Test Results</div>
+                        <div class="report-description">Microsoft Test Results format for CI/CD integration</div>
+                    </div>
+                    <div class="report-content">
+                        <div class="status-badge">CI/CD Ready</div>
+                        <a href="detailed-test-results.trx" class="report-link" target="_blank">Download TRX</a>
+                        <div class="file-info">
+                            <strong>File:</strong> detailed-test-results.trx<br>
+                            <strong>Features:</strong> Machine-readable, Azure DevOps compatible
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-header">
+                        <div class="report-title">📈 Code Coverage Data</div>
+                        <div class="report-description">Cobertura XML format coverage information</div>
+                    </div>
+                    <div class="report-content">
+                        <div class="status-badge">Coverage</div>
+                        <a href="cd9237bd-7bdf-450d-bdc7-4634488aa354/coverage.cobertura.xml" class="report-link" target="_blank">View Coverage XML</a>
+                        <div class="file-info">
+                            <strong>File:</strong> coverage.cobertura.xml<br>
+                            <strong>Features:</strong> Line coverage, branch coverage, code metrics
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-header">
+                        <div class="report-title">📄 Legacy HTML Report</div>
+                        <div class="report-description">Simple HTML test results overview</div>
+                    </div>
+                    <div class="report-content">
+                        <div class="status-badge">Basic</div>
+                        <a href="test-report.html" class="report-link" target="_blank">View Report</a>
+                        <div class="file-info">
+                            <strong>File:</strong> test-report.html<br>
+                            <strong>Features:</strong> Simple layout, basic test results
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="timestamp">
+            Last test execution: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss") | Framework: .NET 9.0 + NUnit 3.14
+        </div>
+    </div>
+</body>
+</html>

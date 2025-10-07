@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="fac903f6-c0b0-4c02-a079-04554a77add0" name="Nandan@LAPTOP-C59JJODQ 2025-10-07 18:41:02" runUser="LAPTOP-C59JJODQ\Nandan" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-10-07T18:41:02.5932250+05:30" queuing="2025-10-07T18:41:02.5932254+05:30" start="2025-10-07T18:41:00.4702852+05:30" finish="2025-10-07T18:41:13.3514882+05:30" />
+  <TestSettings name="default" id="77ba5c49-4f32-4af5-b240-d72ec210d8ed">
+    <Deployment runDeploymentRoot="Nandan_LAPTOP-C59JJODQ_2025-10-07_18_41_02" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="af372f96-ac43-4a8c-aadb-76d050e194c0" testId="c8df70c0-bd52-60d5-75f0-f3cb3a76fc10" testName="get_single_object_should_return_200_or_404" computerName="LAPTOP-C59JJODQ" duration="00:00:00.6117120" startTime="2025-10-07T18:41:04.8320293+05:30" endTime="2025-10-07T18:41:05.4437412+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="af372f96-ac43-4a8c-aadb-76d050e194c0" />
+    <UnitTestResult executionId="909dc04f-5681-42bb-922c-115964c3bd21" testId="6ae9ecaa-5210-0b6b-e971-73173468c1fb" testName="delete_should_return_200_or_204" computerName="LAPTOP-C59JJODQ" duration="00:00:01.1462580" startTime="2025-10-07T18:41:03.0562406+05:30" endTime="2025-10-07T18:41:04.2024976+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="909dc04f-5681-42bb-922c-115964c3bd21" />
+    <UnitTestResult executionId="3eadbfcb-a90e-4e7f-9882-87769ae2c9f0" testId="39661914-65f2-e19d-b34a-fed9fb81ba2f" testName="patch_should_handle_single_field_update" computerName="LAPTOP-C59JJODQ" duration="00:00:01.1339270" startTime="2025-10-07T18:41:06.2656980+05:30" endTime="2025-10-07T18:41:07.3996243+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3eadbfcb-a90e-4e7f-9882-87769ae2c9f0" />
+    <UnitTestResult executionId="79d2c0a9-79ee-47f5-a004-96462cf0cb7d" testId="736e0169-94fd-b6cc-873e-e5e9b37d12f4" testName="patch_nonexistent_resource_should_return_404" computerName="LAPTOP-C59JJODQ" duration="00:00:00.8193300" startTime="2025-10-07T18:41:05.4463059+05:30" endTime="2025-10-07T18:41:06.2656357+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="79d2c0a9-79ee-47f5-a004-96462cf0cb7d" />
+    <UnitTestResult executionId="db0478e8-0847-4e81-8915-0a357883a49b" testId="8dac8213-24ec-df8f-4499-0477bade01a5" testName="patch_with_invalid_resource_id_should_return_error(&quot;null&quot;)" computerName="LAPTOP-C59JJODQ" duration="00:00:00.5939780" startTime="2025-10-07T18:41:12.6713318+05:30" endTime="2025-10-07T18:41:13.2653089+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="db0478e8-0847-4e81-8915-0a357883a49b" />
+    <UnitTestResult executionId="02743d27-93bb-47dc-827e-d28b532f14b9" testId="39d8e594-06aa-4b44-638d-daa0c6a0e253" testName="get_list_should_return_array" computerName="LAPTOP-C59JJODQ" duration="00:00:00.6220830" startTime="2025-10-07T18:41:04.2089640+05:30" endTime="2025-10-07T18:41:04.8310459+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="02743d27-93bb-47dc-827e-d28b532f14b9" />
+    <UnitTestResult executionId="995c91e0-c1ef-43bc-8cfa-83c491f157fa" testId="7c02913d-5135-04e8-871e-ace485d580c2" testName="patch_should_update_specified_fields_and_preserve_others" computerName="LAPTOP-C59JJODQ" duration="00:00:01.0718120" startTime="2025-10-07T18:41:08.4716268+05:30" endTime="2025-10-07T18:41:09.5434386+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="995c91e0-c1ef-43bc-8cfa-83c491f157fa" />
+    <UnitTestResult executionId="7cf12d63-a39b-4ce2-be14-b929ef76ffc8" testId="84dce2a5-e0df-c42f-8b6e-c3b0016e6aba" testName="base_url_should_be_reachable" computerName="LAPTOP-C59JJODQ" duration="00:00:01.0072900" startTime="2025-10-07T18:41:01.2505641+05:30" endTime="2025-10-07T18:41:02.2577621+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7cf12d63-a39b-4ce2-be14-b929ef76ffc8" />
+    <UnitTestResult executionId="506d8577-4505-429a-bfa3-1b5135fb24fc" testId="0c0a7b68-8027-0a56-b9e1-26be526423f8" testName="patch_with_empty_payload_should_return_error" computerName="LAPTOP-C59JJODQ" duration="00:00:01.2318170" startTime="2025-10-07T18:41:09.5434803+05:30" endTime="2025-10-07T18:41:10.7752968+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="506d8577-4505-429a-bfa3-1b5135fb24fc" />
+    <UnitTestResult executionId="5a0d1215-57e3-4030-9b61-430e0360e929" testId="faf8feb0-1bf2-4161-7ecf-4058f4fe91b8" testName="create_should_return_id_and_echo_fields" computerName="LAPTOP-C59JJODQ" duration="00:00:00.7652760" startTime="2025-10-07T18:41:02.2888084+05:30" endTime="2025-10-07T18:41:03.0540840+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5a0d1215-57e3-4030-9b61-430e0360e929" />
+    <UnitTestResult executionId="6eb57396-a19e-442a-ae32-e339a33f3db9" testId="9db57fdb-b4df-c224-e459-557a892a9e95" testName="patch_with_invalid_payload_structure_should_return_client_error" computerName="LAPTOP-C59JJODQ" duration="00:00:01.2323880" startTime="2025-10-07T18:41:10.7753403+05:30" endTime="2025-10-07T18:41:12.0077274+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6eb57396-a19e-442a-ae32-e339a33f3db9" />
+    <UnitTestResult executionId="86a5ab1a-14ce-4ac9-9d9b-c1095cf7eb8d" testId="acaa99e0-205d-62c5-3a30-6863528e91ae" testName="patch_should_handle_special_characters_and_edge_values" computerName="LAPTOP-C59JJODQ" duration="00:00:01.0710510" startTime="2025-10-07T18:41:07.3996647+05:30" endTime="2025-10-07T18:41:08.4707135+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="86a5ab1a-14ce-4ac9-9d9b-c1095cf7eb8d" />
+    <UnitTestResult executionId="7234934b-abcd-4f89-aa75-d5eadaefac3b" testId="95fc054e-2fcf-fde2-c137-dfb01738631b" testName="patch_with_invalid_resource_id_should_return_error(&quot;invalid-format&quot;)" computerName="LAPTOP-C59JJODQ" duration="00:00:00.6634090" startTime="2025-10-07T18:41:12.0078454+05:30" endTime="2025-10-07T18:41:12.6712539+05:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7234934b-abcd-4f89-aa75-d5eadaefac3b" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="patch_nonexistent_resource_should_return_404" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="736e0169-94fd-b6cc-873e-e5e9b37d12f4">
+      <Execution id="79d2c0a9-79ee-47f5-a004-96462cf0cb7d" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_nonexistent_resource_should_return_404" />
+    </UnitTest>
+    <UnitTest name="delete_should_return_200_or_204" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="6ae9ecaa-5210-0b6b-e971-73173468c1fb">
+      <Execution id="909dc04f-5681-42bb-922c-115964c3bd21" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.TestSpecs.Objects_Delete_Specs" name="delete_should_return_200_or_204" />
+    </UnitTest>
+    <UnitTest name="patch_with_empty_payload_should_return_error" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="0c0a7b68-8027-0a56-b9e1-26be526423f8">
+      <Execution id="506d8577-4505-429a-bfa3-1b5135fb24fc" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_with_empty_payload_should_return_error" />
+    </UnitTest>
+    <UnitTest name="get_single_object_should_return_200_or_404" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="c8df70c0-bd52-60d5-75f0-f3cb3a76fc10">
+      <Execution id="af372f96-ac43-4a8c-aadb-76d050e194c0" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.TestSpecs.Objects_Get_Specs" name="get_single_object_should_return_200_or_404" />
+    </UnitTest>
+    <UnitTest name="base_url_should_be_reachable" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="84dce2a5-e0df-c42f-8b6e-c3b0016e6aba">
+      <Execution id="7cf12d63-a39b-4ce2-be14-b929ef76ffc8" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.HealthChecks.Health_Smoke_Specs" name="base_url_should_be_reachable" />
+    </UnitTest>
+    <UnitTest name="get_list_should_return_array" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="39d8e594-06aa-4b44-638d-daa0c6a0e253">
+      <Execution id="02743d27-93bb-47dc-827e-d28b532f14b9" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.TestSpecs.Objects_Get_Specs" name="get_list_should_return_array" />
+    </UnitTest>
+    <UnitTest name="create_should_return_id_and_echo_fields" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="faf8feb0-1bf2-4161-7ecf-4058f4fe91b8">
+      <Execution id="5a0d1215-57e3-4030-9b61-430e0360e929" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.TestSpecs.Objects_Create_Specs" name="create_should_return_id_and_echo_fields" />
+    </UnitTest>
+    <UnitTest name="patch_with_invalid_payload_structure_should_return_client_error" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="9db57fdb-b4df-c224-e459-557a892a9e95">
+      <Execution id="6eb57396-a19e-442a-ae32-e339a33f3db9" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_with_invalid_payload_structure_should_return_client_error" />
+    </UnitTest>
+    <UnitTest name="patch_with_invalid_resource_id_should_return_error(&quot;invalid-format&quot;)" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="95fc054e-2fcf-fde2-c137-dfb01738631b">
+      <Execution id="7234934b-abcd-4f89-aa75-d5eadaefac3b" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_with_invalid_resource_id_should_return_error(&quot;invalid-format&quot;)" />
+    </UnitTest>
+    <UnitTest name="patch_should_handle_special_characters_and_edge_values" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="acaa99e0-205d-62c5-3a30-6863528e91ae">
+      <Execution id="86a5ab1a-14ce-4ac9-9d9b-c1095cf7eb8d" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_should_handle_special_characters_and_edge_values" />
+    </UnitTest>
+    <UnitTest name="patch_with_invalid_resource_id_should_return_error(&quot;null&quot;)" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="8dac8213-24ec-df8f-4499-0477bade01a5">
+      <Execution id="db0478e8-0847-4e81-8915-0a357883a49b" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_with_invalid_resource_id_should_return_error(&quot;null&quot;)" />
+    </UnitTest>
+    <UnitTest name="patch_should_handle_single_field_update" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="39661914-65f2-e19d-b34a-fed9fb81ba2f">
+      <Execution id="3eadbfcb-a90e-4e7f-9882-87769ae2c9f0" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_should_handle_single_field_update" />
+    </UnitTest>
+    <UnitTest name="patch_should_update_specified_fields_and_preserve_others" storage="c:\users\nandan\downloads\zenqa.restapiautomation-fixed\tests\zenqa.apitests\bin\debug\net9.0\zenqa.apitests.dll" id="7c02913d-5135-04e8-871e-ace485d580c2">
+      <Execution id="995c91e0-c1ef-43bc-8cfa-83c491f157fa" />
+      <TestMethod codeBase="C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_should_update_specified_fields_and_preserve_others" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="c8df70c0-bd52-60d5-75f0-f3cb3a76fc10" executionId="af372f96-ac43-4a8c-aadb-76d050e194c0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6ae9ecaa-5210-0b6b-e971-73173468c1fb" executionId="909dc04f-5681-42bb-922c-115964c3bd21" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="39661914-65f2-e19d-b34a-fed9fb81ba2f" executionId="3eadbfcb-a90e-4e7f-9882-87769ae2c9f0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="736e0169-94fd-b6cc-873e-e5e9b37d12f4" executionId="79d2c0a9-79ee-47f5-a004-96462cf0cb7d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8dac8213-24ec-df8f-4499-0477bade01a5" executionId="db0478e8-0847-4e81-8915-0a357883a49b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="39d8e594-06aa-4b44-638d-daa0c6a0e253" executionId="02743d27-93bb-47dc-827e-d28b532f14b9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7c02913d-5135-04e8-871e-ace485d580c2" executionId="995c91e0-c1ef-43bc-8cfa-83c491f157fa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="84dce2a5-e0df-c42f-8b6e-c3b0016e6aba" executionId="7cf12d63-a39b-4ce2-be14-b929ef76ffc8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0c0a7b68-8027-0a56-b9e1-26be526423f8" executionId="506d8577-4505-429a-bfa3-1b5135fb24fc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="faf8feb0-1bf2-4161-7ecf-4058f4fe91b8" executionId="5a0d1215-57e3-4030-9b61-430e0360e929" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9db57fdb-b4df-c224-e459-557a892a9e95" executionId="6eb57396-a19e-442a-ae32-e339a33f3db9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="acaa99e0-205d-62c5-3a30-6863528e91ae" executionId="86a5ab1a-14ce-4ac9-9d9b-c1095cf7eb8d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="95fc054e-2fcf-fde2-c137-dfb01738631b" executionId="7234934b-abcd-4f89-aa75-d5eadaefac3b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="13" executed="13" passed="13" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>NUnit Adapter 4.5.0.0: Test execution started&#xD;
+Running all tests in C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll&#xD;
+   NUnit3TestExecutor discovered 13 of 13 NUnit test cases using Current Discovery mode, Non-Explicit run&#xD;
+NUnit Adapter 4.5.0.0: Test execution complete&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

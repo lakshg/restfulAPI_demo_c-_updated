@@ -6,11 +6,13 @@ using System.Text;
 
 namespace ZenQA.ApiTests.Common;
 
+// Comprehensive test execution reporter with detailed logging and HTML report generation
 public static class TestReporter
 {
     private static readonly List<TestExecutionDetails> TestResults = new();
     private static readonly ILogger Logger = Log.ForContext(typeof(TestReporter));
 
+    // Record test start and initialize tracking
     public static void LogTestStart(string testName, string description = "")
     {
         var testDetail = new TestExecutionDetails
@@ -22,14 +24,16 @@ public static class TestReporter
         };
         
         TestResults.Add(testDetail);
-        Logger.Information("🚀 Test Started: {TestName} - {Description}", testName, description);
+        Logger.Information("Test Started: {TestName} - {Description}", testName, description);
     }
 
+    // Log HTTP request details for current test
     public static void LogRequest(RestRequest request, string endpoint)
     {
         var currentTest = GetCurrentTest();
         if (currentTest != null)
         {
+            // Extract request details for reporting
             var requestLog = new RequestLogDetails
             {
                 Method = request.Method.ToString(),
@@ -42,15 +46,17 @@ public static class TestReporter
             };
             
             currentTest.HttpRequests.Add(requestLog);
-            Logger.Information("📤 HTTP {Method} {Endpoint}", request.Method, endpoint);
+            Logger.Information("HTTP {Method} {Endpoint}", request.Method, endpoint);
         }
     }
 
+    // Log HTTP response details and timing for current test
     public static void LogResponse(RestResponse response, TimeSpan duration)
     {
         var currentTest = GetCurrentTest();
         if (currentTest?.HttpRequests.LastOrDefault() is RequestLogDetails lastRequest)
         {
+            // Attach response details to the most recent request
             lastRequest.Response = new ResponseLogDetails
             {
                 StatusCode = (int)response.StatusCode,
@@ -62,11 +68,12 @@ public static class TestReporter
                 Timestamp = DateTime.UtcNow
             };
 
-            Logger.Information("📥 HTTP {StatusCode} {StatusDescription} - {Duration}ms", 
+            Logger.Information("HTTP {StatusCode} {StatusDescription} - {Duration}ms", 
                 response.StatusCode, response.StatusDescription, duration.TotalMilliseconds);
         }
     }
 
+    // Record test completion with final status and error details
     public static void LogTestEnd(string testName, TestStatus status, string? errorMessage = null, string? stackTrace = null)
     {
         var test = TestResults.FirstOrDefault(t => t.TestName == testName && t.Status == TestStatus.Running);
@@ -96,6 +103,7 @@ public static class TestReporter
         }
     }
 
+    // Generate comprehensive HTML report with all test details
     public static async Task GenerateDetailedHtmlReport(string outputPath)
     {
         var reportData = new
@@ -115,7 +123,7 @@ public static class TestReporter
 
         var html = GenerateHtmlReport(reportData);
         await File.WriteAllTextAsync(outputPath, html);
-        Logger.Information("📊 Detailed HTML report generated: {OutputPath}", outputPath);
+        Logger.Information("Detailed HTML report generated: {OutputPath}", outputPath);
     }
 
     private static TestExecutionDetails? GetCurrentTest()
@@ -374,6 +382,7 @@ public static class TestReporter
         ";
     }
 
+    // Clear all test results (called at start of test run)
     public static void ClearResults()
     {
         TestResults.Clear();

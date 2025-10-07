@@ -1,0 +1,348 @@
+name: ZenQA API Test Automation CI/CD
+
+on:
+  push:
+    branches: [ main, develop, feature/* ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target Environment'
+        required: true
+        default: 'DEV'
+        type: choice
+        options:
+          - DEV
+          - STAGE
+      run_performance_tests:
+        description: 'Run Performance Tests'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  DOTNET_VERSION: '9.0.x'
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  # Job 1: Build and validate code quality
+  build-and-validate:
+    name: 🏗️ Build & Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: 🔧 Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: 📦 Cache NuGet packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: 🔄 Restore dependencies
+      run: dotnet restore
+
+    - name: 🏗️ Build solution
+      run: dotnet build --no-restore --configuration Release
+
+    - name: 🔍 Run static code analysis
+      run: |
+        dotnet format --verify-no-changes --verbosity diagnostic
+      continue-on-error: true
+
+    - name: 📊 Security vulnerability scan
+      run: dotnet list package --vulnerable --include-transitive
+      continue-on-error: true
+
+  # Job 2: Run tests across multiple environments
+  test-matrix:
+    name: 🧪 Test Suite
+    needs: build-and-validate
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        environment: [DEV]
+        include:
+          - os: ubuntu-latest
+            environment: STAGE
+      fail-fast: false
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+
+    - name: 🔧 Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: 📦 Cache NuGet packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: 🔄 Restore dependencies
+      run: dotnet restore
+
+    - name: 🏗️ Build solution
+      run: dotnet build --no-restore --configuration Release
+
+    - name: 🧪 Run Smoke Tests
+      env:
+        TEST_ENV: ${{ matrix.environment }}
+      run: |
+        dotnet test --no-build --configuration Release \
+          --filter "Category=Smoke" \
+          --logger "console;verbosity=detailed" \
+          --logger "junit;LogFilePath=smoke-results.xml" \
+          --results-directory TestResults/Smoke
+
+    - name: 🔬 Run All Tests with Coverage
+      env:
+        TEST_ENV: ${{ matrix.environment }}
+      run: |
+        dotnet test --no-build --configuration Release \
+          --collect:"XPlat Code Coverage" \
+          --logger "console;verbosity=detailed" \
+          --logger "junit;LogFilePath=test-results.xml" \
+          --logger "html;LogFileName=test-report.html" \
+          --results-directory TestResults/All \
+          -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+
+    - name: 📊 Generate Coverage Report
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0
+      with:
+        reports: 'TestResults/**/coverage.opencover.xml'
+        targetdir: 'TestResults/Coverage'
+        reporttypes: 'Html;Badges;TextSummary'
+        verbosity: 'Info'
+        title: 'ZenQA API Test Coverage'
+
+    - name: 📈 Coverage Summary
+      run: |
+        if [ -f "TestResults/Coverage/Summary.txt" ]; then
+          echo "## 📊 Code Coverage Report" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          cat TestResults/Coverage/Summary.txt >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        fi
+      shell: bash
+
+    - name: 📋 Test Results Summary
+      if: always()
+      run: |
+        echo "## 🧪 Test Results Summary (${{ matrix.os }} - ${{ matrix.environment }})" >> $GITHUB_STEP_SUMMARY
+        if [ -f "TestResults/All/test-results.xml" ]; then
+          echo "✅ Test execution completed" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ Test execution failed" >> $GITHUB_STEP_SUMMARY
+        fi
+      shell: bash
+
+    - name: 📤 Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results-${{ matrix.os }}-${{ matrix.environment }}
+        path: |
+          TestResults/
+          tests/ZenQA.ApiTests/reports/
+        retention-days: 30
+
+    - name: 📊 Publish Test Results
+      if: always()
+      uses: dorny/test-reporter@v1
+      with:
+        name: Test Results (${{ matrix.os }} - ${{ matrix.environment }})
+        path: 'TestResults/**/test-results.xml'
+        reporter: java-junit
+        fail-on-error: false
+
+  # Job 3: Performance testing (optional)
+  performance-tests:
+    name: ⚡ Performance Tests
+    needs: test-matrix
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.run_performance_tests == 'true' || github.event_name == 'schedule' }}
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+
+    - name: 🔧 Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: 🔄 Restore dependencies
+      run: dotnet restore
+
+    - name: 🏗️ Build solution
+      run: dotnet build --no-restore --configuration Release
+
+    - name: ⚡ Run Performance Tests
+      env:
+        TEST_ENV: ${{ github.event.inputs.environment || 'DEV' }}
+      run: |
+        dotnet test --no-build --configuration Release \
+          --filter "Category=Performance" \
+          --logger "console;verbosity=detailed" \
+          --logger "junit;LogFilePath=performance-results.xml" \
+          --results-directory TestResults/Performance
+      continue-on-error: true
+
+    - name: 📤 Upload Performance Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: performance-results
+        path: TestResults/Performance/
+        retention-days: 30
+
+  # Job 4: Security and compliance checks
+  security-scan:
+    name: 🔒 Security Scan
+    needs: build-and-validate
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+
+    - name: 🔧 Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: 🔄 Restore dependencies
+      run: dotnet restore
+
+    - name: 🔒 Run security audit
+      run: |
+        dotnet list package --vulnerable --include-transitive > security-audit.txt
+        if grep -q "has the following vulnerable packages" security-audit.txt; then
+          echo "🚨 Security vulnerabilities found!"
+          cat security-audit.txt
+          exit 1
+        else
+          echo "✅ No security vulnerabilities found"
+        fi
+
+    - name: 📤 Upload Security Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-audit
+        path: security-audit.txt
+        retention-days: 30
+
+  # Job 5: Create and publish comprehensive report
+  publish-results:
+    name: 📊 Publish Results
+    needs: [test-matrix, security-scan]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+
+    - name: 📥 Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts/
+
+    - name: 📊 Generate Comprehensive Report
+      run: |
+        mkdir -p comprehensive-report
+        echo "# 🧪 ZenQA API Test Automation Report" > comprehensive-report/README.md
+        echo "**Generated:** $(date)" >> comprehensive-report/README.md
+        echo "" >> comprehensive-report/README.md
+        
+        echo "## 📋 Test Execution Summary" >> comprehensive-report/README.md
+        for os in ubuntu-latest windows-latest macos-latest; do
+          if [ -d "artifacts/test-results-$os-DEV" ]; then
+            echo "- ✅ $os tests completed" >> comprehensive-report/README.md
+          else
+            echo "- ❌ $os tests failed" >> comprehensive-report/README.md
+          fi
+        done
+        
+        echo "" >> comprehensive-report/README.md
+        echo "## 🔒 Security Status" >> comprehensive-report/README.md
+        if [ -f "artifacts/security-audit/security-audit.txt" ]; then
+          if grep -q "has the following vulnerable packages" artifacts/security-audit/security-audit.txt; then
+            echo "- ❌ Security vulnerabilities detected" >> comprehensive-report/README.md
+          else
+            echo "- ✅ No security vulnerabilities found" >> comprehensive-report/README.md
+          fi
+        fi
+        
+        # Copy all test reports and results
+        find artifacts/ -name "*.html" -exec cp {} comprehensive-report/ \;
+        find artifacts/ -name "*.xml" -exec cp {} comprehensive-report/ \;
+
+    - name: 📤 Upload Comprehensive Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: comprehensive-test-report
+        path: comprehensive-report/
+        retention-days: 90
+
+    - name: 🎯 Update Job Summary
+      if: always()
+      run: |
+        echo "# 🧪 ZenQA API Test Automation Results" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Workflow:** ${{ github.workflow }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Trigger:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "📊 **Comprehensive test report available in artifacts**" >> $GITHUB_STEP_SUMMARY
+
+  # Job 6: Notification (optional)
+  notify:
+    name: 📢 Notifications
+    needs: [test-matrix, security-scan, publish-results]
+    runs-on: ubuntu-latest
+    if: always() && (github.event_name == 'push' || github.event_name == 'schedule')
+    
+    steps:
+    - name: 📢 Success Notification
+      if: ${{ needs.test-matrix.result == 'success' && needs.security-scan.result == 'success' }}
+      run: |
+        echo "✅ All tests passed successfully!"
+        echo "🔒 Security scan completed without issues"
+        echo "📊 Reports are available in the artifacts"
+
+    - name: 🚨 Failure Notification
+      if: ${{ needs.test-matrix.result == 'failure' || needs.security-scan.result == 'failure' }}
+      run: |
+        echo "❌ Test execution or security scan failed!"
+        echo "📋 Check the job logs and artifacts for details"
+        echo "🔧 Action required to fix the issues"
+
+# Workflow configuration
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using RestSharp;
 using ZenQA.ApiTests.Common;
 
-namespace ZenQA.ApiTests.Smoke;
+namespace ZenQA.ApiTests.HealthChecks;
 
 public class Health_Smoke_Specs : TestBase
 {

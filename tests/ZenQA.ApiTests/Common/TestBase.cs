@@ -4,15 +4,17 @@ using Serilog;
 
 namespace ZenQA.ApiTests.Common;
 
+// Base class for all API test classes with logging and reporting setup
 public abstract class TestBase
 {
     protected RestClient Client = null!;
     private string _currentTestName = "";
 
+    // One-time setup for entire test run
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        // Initialize Serilog
+        // Configure structured logging to file
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .WriteTo.File("tests/ZenQA.ApiTests/reports/test-execution.log", 
@@ -20,28 +22,34 @@ public abstract class TestBase
                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
             .CreateLogger();
 
+        // Initialize test reporter
         TestReporter.ClearResults();
     }
 
+    // Setup before each test
     [SetUp]
     public void SetUp()
     {
         _currentTestName = TestContext.CurrentContext.Test.Name;
-        Client = ApiClient.Create();
+        Client = ApiClient.Create(); // Create fresh HTTP client for each test
         
-        // Get test description from method attributes if available
+        // Extract test description from attributes
         var testMethod = GetType().GetMethod(_currentTestName);
         var description = testMethod?.GetCustomAttributes(typeof(TestAttribute), false)
             .Cast<TestAttribute>()
             .FirstOrDefault()?.Description ?? "";
             
+        // Log test start for reporting
         TestReporter.LogTestStart(_currentTestName, description);
     }
 
+    // Cleanup after each test
     [TearDown]
     public void TearDown()
     {
         var context = TestContext.CurrentContext;
+        
+        // Convert NUnit status to internal enum
         var status = context.Result.Outcome.Status switch
         {
             NUnit.Framework.Interfaces.TestStatus.Passed => TestStatus.Passed,
@@ -50,16 +58,21 @@ public abstract class TestBase
             _ => TestStatus.Failed
         };
 
+        // Log test completion with result details
         TestReporter.LogTestEnd(_currentTestName, status, 
             context.Result.Message, 
             context.Result.StackTrace);
     }
 
+    // Final cleanup after all tests complete
     [OneTimeTearDown]
     public async Task OneTimeTearDown()
     {
+        // Generate detailed HTML report
         var reportPath = Path.Combine("tests", "ZenQA.ApiTests", "reports", "detailed-test-report.html");
         await TestReporter.GenerateDetailedHtmlReport(reportPath);
+        
+        // Close logging system
         Log.CloseAndFlush();
     }
 }

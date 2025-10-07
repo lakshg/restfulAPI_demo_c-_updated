@@ -1,19 +1,24 @@
 <testsuites>
-  <testsuite name="ZenQA.ApiTests.dll" tests="8" skipped="0" failures="0" errors="0" time="6.529356" timestamp="2025-10-07T11:39:38" hostname="LAPTOP-C59JJODQ" id="0" package="ZenQA.ApiTests.dll">
+  <testsuite name="ZenQA.ApiTests.dll" tests="13" skipped="0" failures="0" errors="0" time="11.9952069" timestamp="2025-10-07T13:10:13" hostname="LAPTOP-C59JJODQ" id="0" package="ZenQA.ApiTests.dll">
     <properties />
-    <testcase classname="ZenQA.ApiTests.Smoke.Health_Smoke_Specs" name="base_url_should_be_reachable" time="0.8029780" />
-    <testcase classname="ZenQA.ApiTests.Specs.Objects_Create_Specs" name="create_should_return_id_and_echo_fields" time="0.6546320" />
-    <testcase classname="ZenQA.ApiTests.Specs.Objects_Delete_Specs" name="delete_should_return_200_or_204" time="1.0291450" />
-    <testcase classname="ZenQA.ApiTests.Specs.Objects_Get_Specs" name="get_list_should_return_array" time="0.7313730" />
-    <testcase classname="ZenQA.ApiTests.Specs.Objects_Get_Specs" name="get_single_object_should_return_200_or_404" time="0.6209970" />
-    <testcase classname="ZenQA.ApiTests.Specs.Objects_Update_Specs" name="patch_nonexistent_should_be_404" time="0.6987370" />
-    <testcase classname="ZenQA.ApiTests.Specs.Objects_Update_Specs" name="patch_should_update_partial_fields_and_keep_others" time="1.0642100" />
-    <testcase classname="ZenQA.ApiTests.Specs.Objects_Update_Specs" name="patch_with_invalid_payload_should_be_4xx" time="0.9272840" />
+    <testcase classname="ZenQA.ApiTests.HealthChecks.Health_Smoke_Specs" name="base_url_should_be_reachable" time="1.0189780" />
+    <testcase classname="ZenQA.ApiTests.TestSpecs.Objects_Create_Specs" name="create_should_return_id_and_echo_fields" time="0.8058999" />
+    <testcase classname="ZenQA.ApiTests.TestSpecs.Objects_Delete_Specs" name="delete_should_return_200_or_204" time="1.1285210" />
+    <testcase classname="ZenQA.ApiTests.TestSpecs.Objects_Get_Specs" name="get_list_should_return_array" time="0.6965900" />
+    <testcase classname="ZenQA.ApiTests.TestSpecs.Objects_Get_Specs" name="get_single_object_should_return_200_or_404" time="0.6445440" />
+    <testcase classname="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_nonexistent_resource_should_return_404" time="0.6359410" />
+    <testcase classname="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_should_handle_single_field_update" time="1.1537720" />
+    <testcase classname="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_should_handle_special_characters_and_edge_values" time="1.1379470" />
+    <testcase classname="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_should_update_specified_fields_and_preserve_others" time="1.0754930" />
+    <testcase classname="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_with_empty_payload_should_return_error" time="1.0622730" />
+    <testcase classname="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_with_invalid_payload_structure_should_return_client_error" time="1.1528220" />
+    <testcase classname="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_with_invalid_resource_id_should_return_error(&quot;invalid-format&quot;)" time="0.7406560" />
+    <testcase classname="ZenQA.ApiTests.TestSpecs.Objects_Update_Specs" name="patch_with_invalid_resource_id_should_return_error(&quot;null&quot;)" time="0.7417700" />
     <system-out>
 Test Framework Informational Messages:
 NUnit Adapter 4.5.0.0: Test execution started
 Running all tests in C:\Users\Nandan\Downloads\ZenQA.RestApiAutomation-fixed\tests\ZenQA.ApiTests\bin\Debug\net9.0\ZenQA.ApiTests.dll
-   NUnit3TestExecutor discovered 8 of 8 NUnit test cases using Current Discovery mode, Non-Explicit run
+   NUnit3TestExecutor discovered 13 of 13 NUnit test cases using Current Discovery mode, Non-Explicit run
 NUnit Adapter 4.5.0.0: Test execution complete
 </system-out>
     <system-err></system-err>
