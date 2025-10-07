@@ -1,0 +1,12 @@
+bin/
+obj/
+TestResults/
+.vscode/
+.idea/
+*.user
+*.suo
+*.cache
+*.log
+reports/*.trx
+reports/*.xml
+!reports/.gitkeep

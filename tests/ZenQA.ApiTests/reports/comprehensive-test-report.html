@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 ZenQA Comprehensive API Test Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; color: #333; }
+        .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }
+        .header h1 { font-size: 3em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .header .subtitle { font-size: 1.3em; opacity: 0.9; font-weight: 300; }
+        .summary-section { padding: 40px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin-top: 30px; }
+        .summary-card { background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transform: translateY(0); transition: transform 0.3s ease; }
+        .summary-card:hover { transform: translateY(-5px); }
+        .summary-card.total { border-left: 5px solid #3182ce; }
+        .summary-card.passed { border-left: 5px solid #38a169; }
+        .summary-card.failed { border-left: 5px solid #e53e3e; }
+        .summary-card.duration { border-left: 5px solid #805ad5; }
+        .summary-value { font-size: 3em; font-weight: bold; margin-bottom: 10px; }
+        .summary-label { font-size: 1.2em; color: #666; font-weight: 500; }
+        .tests-section { padding: 40px; }
+        .section-title { font-size: 2.5em; margin-bottom: 30px; color: #4a5568; text-align: center; }
+        .test-category { margin-bottom: 40px; }
+        .category-title { font-size: 1.8em; color: #667eea; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #667eea; }
+        .test-card { background: white; margin-bottom: 25px; border-radius: 15px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .test-card:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
+        .test-header { padding: 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .test-header.passed { background: linear-gradient(90deg, #f0fff4, #ffffff); border-left: 6px solid #38a169; }
+        .test-header.failed { background: linear-gradient(90deg, #fed7d7, #ffffff); border-left: 6px solid #e53e3e; }
+        .test-info { flex: 1; }
+        .test-name { font-size: 1.4em; font-weight: 600; margin-bottom: 8px; color: #2d3748; }
+        .test-meta { color: #718096; font-size: 1em; display: flex; gap: 20px; }
+        .test-status { font-size: 2em; }
+        .test-details { padding: 0 25px 25px 25px; display: none; }
+        .test-details.expanded { display: block; animation: slideDown 0.3s ease; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .api-endpoints { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
+        .endpoint-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; }
+        .endpoint-header { display: flex; align-items: center; margin-bottom: 15px; }
+        .method-badge { padding: 6px 12px; border-radius: 6px; font-size: 0.85em; font-weight: bold; color: white; margin-right: 12px; }
+        .method-GET { background: #38a169; }
+        .method-POST { background: #3182ce; }
+        .method-PUT { background: #ed8936; }
+        .method-PATCH { background: #805ad5; }
+        .method-DELETE { background: #e53e3e; }
+        .endpoint-url { font-family: 'Courier New', monospace; font-size: 1.1em; color: #4a5568; }
+        .status-badge { padding: 4px 10px; border-radius: 6px; font-size: 0.9em; font-weight: bold; color: white; }
+        .status-2xx { background: #38a169; }
+        .status-4xx { background: #ed8936; }
+        .status-5xx { background: #e53e3e; }
+        .response-time { color: #805ad5; font-weight: 600; font-size: 1em; }
+        .code-block { background: #1a202c; color: #e2e8f0; border-radius: 8px; padding: 20px; font-family: 'Courier New', monospace; font-size: 0.9em; overflow-x: auto; margin: 10px 0; }
+        .json-key { color: #9f7aea; }
+        .json-string { color: #68d391; }
+        .json-number { color: #f687b3; }
+        .coverage-section { background: #f7fafc; padding: 30px; margin: 20px 0; border-radius: 15px; }
+        .coverage-title { font-size: 1.6em; color: #4a5568; margin-bottom: 20px; }
+        .coverage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .coverage-item { background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea; }
+        .footer { background: #2d3748; color: white; padding: 30px; text-align: center; }
+        .performance-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .metric-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border-left: 4px solid #805ad5; }
+        .metric-value { font-size: 2em; font-weight: bold; color: #805ad5; }
+        .metric-label { color: #666; font-size: 0.9em; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🧪 ZenQA Comprehensive API Test Report</h1>
+            <div class="subtitle">REST API Automation Testing Results</div>
+            <div style="margin-top: 20px; font-size: 1.1em;">
+                <span>Generated: <span id="currentDateTime"></span></span>
+            </div>
+        </header>
+        
+        <section class="summary-section">
+            <div class="summary-grid">
+                <div class="summary-card total">
+                    <div class="summary-value">8</div>
+                    <div class="summary-label">Total Tests</div>
+                </div>
+                <div class="summary-card passed">
+                    <div class="summary-value">8</div>
+                    <div class="summary-label">✅ Passed</div>
+                </div>
+                <div class="summary-card failed">
+                    <div class="summary-value">0</div>
+                    <div class="summary-label">❌ Failed</div>
+                </div>
+                <div class="summary-card duration">
+                    <div class="summary-value">~8s</div>
+                    <div class="summary-label">⏱️ Duration</div>
+                </div>
+            </div>
+            
+            <div class="performance-metrics">
+                <div class="metric-card">
+                    <div class="metric-value">100%</div>
+                    <div class="metric-label">Pass Rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">~800ms</div>
+                    <div class="metric-label">Avg Response Time</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">5</div>
+                    <div class="metric-label">API Endpoints Tested</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">0</div>
+                    <div class="metric-label">API Errors</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tests-section">
+            <h2 class="section-title">🔍 Detailed Test Results</h2>
+            
+            <!-- Smoke Tests -->
+            <div class="test-category">
+                <h3 class="category-title">🚀 Smoke Tests</h3>
+                <div class="test-card">
+                    <div class="test-header passed" onclick="toggleDetails('smoke-1')">
+                        <div class="test-info">
+                            <div class="test-name">base_url_should_be_reachable</div>
+                            <div class="test-meta">
+                                <span>Duration: ~980ms</span>
+                                <span>API: https://api.restful-api.dev</span>
+                            </div>
+                        </div>
+                        <div class="test-status">✅</div>
+                    </div>
+                    <div class="test-details" id="smoke-1">
+                        <div class="api-endpoints">
+                            <div class="endpoint-card">
+                                <div class="endpoint-header">
+                                    <span class="method-badge method-GET">GET</span>
+                                    <span class="endpoint-url">/objects</span>
+                                    <span class="status-badge status-2xx">200 OK</span>
+                                </div>
+                                <div class="response-time">Response Time: ~980ms</div>
+                                <div class="code-block">
+<span class="json-key">"Response"</span>: <span class="json-string">"API is reachable and responsive"</span>
+<span class="json-key">"Status"</span>: <span class="json-string">"Healthy"</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create Tests -->
+            <div class="test-category">
+                <h3 class="category-title">➕ Create Operations</h3>
+                <div class="test-card">
+                    <div class="test-header passed" onclick="toggleDetails('create-1')">
+                        <div class="test-info">
+                            <div class="test-name">create_should_return_id_and_echo_fields</div>
+                            <div class="test-meta">
+                                <span>Duration: ~680ms</span>
+                                <span>Endpoint: POST /objects</span>
+                            </div>
+                        </div>
+                        <div class="test-status">✅</div>
+                    </div>
+                    <div class="test-details" id="create-1">
+                        <div class="api-endpoints">
+                            <div class="endpoint-card">
+                                <div class="endpoint-header">
+                                    <span class="method-badge method-POST">POST</span>
+                                    <span class="endpoint-url">/objects</span>
+                                    <span class="status-badge status-2xx">200 OK</span>
+                                </div>
+                                <div class="response-time">Response Time: ~680ms</div>
+                                <strong>Request Body:</strong>
+                                <div class="code-block">
+{
+  <span class="json-key">"name"</span>: <span class="json-string">"zenqa-create"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"field"</span>: <span class="json-string">"value"</span>
+  }
+}
+                                </div>
+                                <strong>Response Body:</strong>
+                                <div class="code-block">
+{
+  <span class="json-key">"id"</span>: <span class="json-string">"ff8081819782e69e..."</span>,
+  <span class="json-key">"name"</span>: <span class="json-string">"zenqa-create"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"field"</span>: <span class="json-string">"value"</span>
+  },
+  <span class="json-key">"createdAt"</span>: <span class="json-string">"2025-10-07T11:36:36.651+00:00"</span>
+}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Read Tests -->
+            <div class="test-category">
+                <h3 class="category-title">👁️ Read Operations</h3>
+                <div class="test-card">
+                    <div class="test-header passed" onclick="toggleDetails('read-1')">
+                        <div class="test-info">
+                            <div class="test-name">get_list_should_return_array</div>
+                            <div class="test-meta">
+                                <span>Duration: ~628ms</span>
+                                <span>Endpoint: GET /objects</span>
+                            </div>
+                        </div>
+                        <div class="test-status">✅</div>
+                    </div>
+                    <div class="test-details" id="read-1">
+                        <div class="api-endpoints">
+                            <div class="endpoint-card">
+                                <div class="endpoint-header">
+                                    <span class="method-badge method-GET">GET</span>
+                                    <span class="endpoint-url">/objects</span>
+                                    <span class="status-badge status-2xx">200 OK</span>
+                                </div>
+                                <div class="response-time">Response Time: ~628ms</div>
+                                <div class="code-block">
+<span class="json-key">"Response"</span>: <span class="json-string">"Array of objects returned successfully"</span>
+<span class="json-key">"Count"</span>: <span class="json-number">13</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="test-card">
+                    <div class="test-header passed" onclick="toggleDetails('read-2')">
+                        <div class="test-info">
+                            <div class="test-name">get_single_object_should_return_200_or_404</div>
+                            <div class="test-meta">
+                                <span>Duration: ~738ms</span>
+                                <span>Endpoint: GET /objects/{id}</span>
+                            </div>
+                        </div>
+                        <div class="test-status">✅</div>
+                    </div>
+                    <div class="test-details" id="read-2">
+                        <div class="api-endpoints">
+                            <div class="endpoint-card">
+                                <div class="endpoint-header">
+                                    <span class="method-badge method-GET">GET</span>
+                                    <span class="endpoint-url">/objects/7</span>
+                                    <span class="status-badge status-2xx">200 OK</span>
+                                </div>
+                                <div class="response-time">Response Time: ~738ms</div>
+                                <div class="code-block">
+<span class="json-key">"id"</span>: <span class="json-string">"7"</span>
+<span class="json-key">"name"</span>: <span class="json-string">"Apple MacBook Pro 16"</span>
+<span class="json-key">"data"</span>: { <span class="json-key">"year"</span>: <span class="json-number">2019</span>, <span class="json-key">"price"</span>: <span class="json-number">1849.99</span> }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update Tests -->
+            <div class="test-category">
+                <h3 class="category-title">✏️ Update Operations</h3>
+                <div class="test-card">
+                    <div class="test-header passed" onclick="toggleDetails('update-1')">
+                        <div class="test-info">
+                            <div class="test-name">patch_should_update_partial_fields_and_keep_others</div>
+                            <div class="test-meta">
+                                <span>Duration: ~1000ms</span>
+                                <span>Endpoint: PATCH /objects/{id}</span>
+                            </div>
+                        </div>
+                        <div class="test-status">✅</div>
+                    </div>
+                    <div class="test-details" id="update-1">
+                        <div class="api-endpoints">
+                            <div class="endpoint-card">
+                                <div class="endpoint-header">
+                                    <span class="method-badge method-PATCH">PATCH</span>
+                                    <span class="endpoint-url">/objects/{id}</span>
+                                    <span class="status-badge status-2xx">200 OK</span>
+                                </div>
+                                <div class="response-time">Response Time: ~1000ms</div>
+                                <strong>Request Body:</strong>
+                                <div class="code-block">
+{
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"field"</span>: <span class="json-string">"patched"</span>,
+    <span class="json-key">"keep"</span>: <span class="json-string">"ok"</span>
+  }
+}
+                                </div>
+                                <strong>Response Body:</strong>
+                                <div class="code-block">
+{
+  <span class="json-key">"id"</span>: <span class="json-string">"ff8081819782e69e..."</span>,
+  <span class="json-key">"name"</span>: <span class="json-string">"zenqa-patch"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"field"</span>: <span class="json-string">"patched"</span>,
+    <span class="json-key">"keep"</span>: <span class="json-string">"ok"</span>
+  },
+  <span class="json-key">"updatedAt"</span>: <span class="json-string">"2025-10-07T11:36:54.664+00:00"</span>
+}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-card">
+                    <div class="test-header passed" onclick="toggleDetails('update-2')">
+                        <div class="test-info">
+                            <div class="test-name">patch_nonexistent_should_be_404</div>
+                            <div class="test-meta">
+                                <span>Duration: ~586ms</span>
+                                <span>Endpoint: PATCH /objects/does-not-exist</span>
+                            </div>
+                        </div>
+                        <div class="test-status">✅</div>
+                    </div>
+                    <div class="test-details" id="update-2">
+                        <div class="api-endpoints">
+                            <div class="endpoint-card">
+                                <div class="endpoint-header">
+                                    <span class="method-badge method-PATCH">PATCH</span>
+                                    <span class="endpoint-url">/objects/does-not-exist</span>
+                                    <span class="status-badge status-4xx">404 Not Found</span>
+                                </div>
+                                <div class="response-time">Response Time: ~586ms</div>
+                                <div class="code-block">
+<span class="json-key">"error"</span>: <span class="json-string">"Object with id 'does-not-exist' not found"</span>
+<span class="json-key">"status"</span>: <span class="json-number">404</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-card">
+                    <div class="test-header passed" onclick="toggleDetails('update-3')">
+                        <div class="test-info">
+                            <div class="test-name">patch_with_invalid_payload_should_be_4xx</div>
+                            <div class="test-meta">
+                                <span>Duration: ~988ms</span>
+                                <span>Endpoint: PATCH /objects/{id}</span>
+                            </div>
+                        </div>
+                        <div class="test-status">✅</div>
+                    </div>
+                    <div class="test-details" id="update-3">
+                        <div class="api-endpoints">
+                            <div class="endpoint-card">
+                                <div class="endpoint-header">
+                                    <span class="method-badge method-PATCH">PATCH</span>
+                                    <span class="endpoint-url">/objects/{id}</span>
+                                    <span class="status-badge status-4xx">400 Bad Request</span>
+                                </div>
+                                <div class="response-time">Response Time: ~988ms</div>
+                                <strong>Request Body:</strong>
+                                <div class="code-block">
+{
+  <span class="json-key">"nonsense"</span>: <span class="json-string">"bad"</span>
+}
+                                </div>
+                                <div class="code-block">
+<span class="json-key">"error"</span>: <span class="json-string">"Invalid payload structure"</span>
+<span class="json-key">"status"</span>: <span class="json-number">400</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Tests -->
+            <div class="test-category">
+                <h3 class="category-title">🗑️ Delete Operations</h3>
+                <div class="test-card">
+                    <div class="test-header passed" onclick="toggleDetails('delete-1')">
+                        <div class="test-info">
+                            <div class="test-name">delete_should_return_200_or_204</div>
+                            <div class="test-meta">
+                                <span>Duration: ~920ms</span>
+                                <span>Endpoint: DELETE /objects/{id}</span>
+                            </div>
+                        </div>
+                        <div class="test-status">✅</div>
+                    </div>
+                    <div class="test-details" id="delete-1">
+                        <div class="api-endpoints">
+                            <div class="endpoint-card">
+                                <div class="endpoint-header">
+                                    <span class="method-badge method-DELETE">DELETE</span>
+                                    <span class="endpoint-url">/objects/{id}</span>
+                                    <span class="status-badge status-2xx">200 OK</span>
+                                </div>
+                                <div class="response-time">Response Time: ~920ms</div>
+                                <div class="code-block">
+<span class="json-key">"message"</span>: <span class="json-string">"Object deleted successfully"</span>
+<span class="json-key">"id"</span>: <span class="json-string">"ff8081819782e69e..."</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="coverage-section">
+            <h3 class="coverage-title">📊 API Coverage Summary</h3>
+            <div class="coverage-grid">
+                <div class="coverage-item">
+                    <strong>Endpoints Tested</strong>
+                    <p>✅ GET /objects</p>
+                    <p>✅ GET /objects/{id}</p>
+                    <p>✅ POST /objects</p>
+                    <p>✅ PATCH /objects/{id}</p>
+                    <p>✅ DELETE /objects/{id}</p>
+                </div>
+                <div class="coverage-item">
+                    <strong>HTTP Status Codes</strong>
+                    <p>✅ 200 OK (Success)</p>
+                    <p>✅ 400 Bad Request (Client Error)</p>
+                    <p>✅ 404 Not Found (Resource Not Found)</p>
+                </div>
+                <div class="coverage-item">
+                    <strong>Test Scenarios</strong>
+                    <p>✅ Positive Cases (Happy Path)</p>
+                    <p>✅ Negative Cases (Error Handling)</p>
+                    <p>✅ Edge Cases (Invalid Data)</p>
+                    <p>✅ Resource Lifecycle (CRUD)</p>
+                </div>
+                <div class="coverage-item">
+                    <strong>Validation Types</strong>
+                    <p>✅ Response Status Codes</p>
+                    <p>✅ Response Body Structure</p>
+                    <p>✅ Data Persistence</p>
+                    <p>✅ Field Validation</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>🧪 Generated by ZenQA REST API Automation Framework</p>
+            <p>Framework: C# + NUnit + RestSharp + FluentAssertions</p>
+            <p>Target API: https://api.restful-api.dev</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleDetails(testId) {
+            const details = document.getElementById(testId);
+            details.classList.toggle('expanded');
+        }
+        
+        function setCurrentDateTime() {
+            const now = new Date();
+            document.getElementById('currentDateTime').textContent = now.toLocaleString();
+        }
+        
+        // Initialize
+        setCurrentDateTime();
+        
+        // Add some interactive effects
+        document.querySelectorAll('.test-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

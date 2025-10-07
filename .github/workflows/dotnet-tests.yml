@@ -1,0 +1,22 @@
+name: dotnet-tests
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore
+        run: dotnet restore ZenQA.RestApiAutomation.sln
+      - name: Test
+        run: dotnet test ZenQA.RestApiAutomation.sln --no-build --logger "junit;LogFilePath=tests/ZenQA.ApiTests/reports/junit.xml"
+      - name: Upload JUnit
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-report
+          path: tests/ZenQA.ApiTests/reports/junit.xml
